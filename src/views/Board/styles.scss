@@ -1,0 +1,23 @@
+.main-board {
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+  display: flex;
+  flex-flow: column;
+  .board-table-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+  }
+  .board-voting-container {
+    flex-grow: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+    border-top: 1px solid #dedede;
+  }
+}
