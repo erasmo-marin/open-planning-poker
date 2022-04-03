@@ -1,6 +1,4 @@
 export const settings = {
-  path: "/planning-poker",
-  host: "os-planning-poker.herokuapp.com",
-  port: 443,
+  host: "cs-planning-poker.herokuapp.com",
   secure: true,
 };
