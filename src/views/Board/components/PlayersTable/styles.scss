@@ -21,6 +21,13 @@
     height: 200px;
     border: 1px solid rgba(0, 0, 0, 0.4);
     border-top: 3px solid rgba(0, 0, 0, 0.4);
+    .host-actions {
+      display: flex;
+      flex-flow: column;
+      .button {
+        margin: 10px;
+      }
+    }
   }
   .sit-area {
     display: flex;

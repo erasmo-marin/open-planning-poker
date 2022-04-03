@@ -2,6 +2,7 @@
   width: 75px;
   height: 120px;
   perspective: 1000px;
+  position: relative;
 
   &:not(.revealed) .card-inner {
     transform: rotateY(180deg);
@@ -49,5 +50,11 @@
   .card-value {
     font-size: 24px;
     text-align: center;
+  }
+  .check {
+    font-size: 14px;
+    position: absolute;
+    top: -7px;
+    right: -7px;
   }
 }

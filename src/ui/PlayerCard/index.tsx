@@ -3,8 +3,9 @@ import Card from "../Card";
 import "./styles.scss";
 
 export interface PlayerCardProps {
-  value: number;
+  value: number | null;
   revealed?: boolean;
+  check?: boolean;
   name: string;
 }
 
@@ -14,10 +15,11 @@ const PlayerCard: PlayerCardType = ({
   name,
   value,
   revealed = true,
+  check = false,
 }: PlayerCardProps) => {
   return (
     <div className="planning-player-card">
-      <Card value={value} revealed={revealed} selected={false} />
+      <Card value={value} revealed={revealed} selected={false} check={check} />
       <p>{name}</p>
     </div>
   );

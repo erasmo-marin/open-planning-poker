@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Card from "../../ui/Card";
-import { VotingScale } from "../../models/VotingScale";
+import Card from "../../../../ui/Card";
+import { VotingScale } from "../../../../models/VotingScale";
 import "./styles.scss";
 
 export interface CardValueChooserProps {
-  onValueSelected?: (value: number) => number;
+  onValueSelected?: (value: number) => any;
   scale?: VotingScale;
 }
 

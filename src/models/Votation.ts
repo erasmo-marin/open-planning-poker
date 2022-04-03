@@ -1,9 +1,11 @@
 import { Player } from "./Player";
 import { VotingScale } from "./VotingScale";
 
+export type Vote = { player: Player; vote: number | null };
+
 export interface Votation {
-  id: number;
+  id: string;
   scale: VotingScale;
   players: Array<Player>;
-  votes: Array<{ player: Player; vote: number }>;
+  votes: Array<Vote>;
 }

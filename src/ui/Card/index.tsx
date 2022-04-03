@@ -3,9 +3,10 @@ import classnames from "classnames";
 import "./styles.scss";
 
 export interface CardProps {
-  value: number;
+  value: number | null;
   revealed?: boolean;
   selected?: boolean;
+  check?: boolean;
   onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
@@ -15,6 +16,7 @@ const Card: CardType = ({
   value,
   revealed = true,
   selected = false,
+  check = false,
   onClick,
 }: CardProps) => {
   const classes = classnames("planning-card", { revealed, selected });
@@ -23,10 +25,11 @@ const Card: CardType = ({
     <article className={classes} onClick={onClick}>
       <div className="card-inner">
         <div className="card-front">
-          <div className="card-value">{value}</div>
+          {value && <div className="card-value">{value}</div>}
         </div>
         <div className="card-back" />
       </div>
+      {check && <div className="check">✅️</div>}
     </article>
   );
 };
