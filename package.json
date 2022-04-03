@@ -24,7 +24,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start-server": "peerjs --port 9000 --key peerjs --path /planning-poker",
+    "start-server": "peerjs --port 443 --key peerjs --path /planning-poker",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

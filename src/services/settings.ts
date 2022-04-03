@@ -1,5 +1,6 @@
 export const settings = {
   path: "/planning-poker",
-  host: "localhost",
-  port: 9000,
+  host: "os-planning-poker.herokuapp.com",
+  port: 443,
+  secure: true,
 };

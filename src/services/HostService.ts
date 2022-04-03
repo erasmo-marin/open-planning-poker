@@ -33,7 +33,7 @@ class HostService {
 
   /*Send a message to all the host members*/
   broadcast(message: string) {
-    this.peers.map((peer: any) => {
+    this.peers.forEach((peer: any) => {
       peer.send(message);
     });
   }
