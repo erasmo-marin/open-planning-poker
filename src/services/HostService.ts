@@ -1,4 +1,4 @@
-import Peer from "peerjs";
+import { Peer } from "peerjs";
 import { settings } from "./settings";
 
 class HostService {
