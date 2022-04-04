@@ -1,8 +1,14 @@
 button.button {
-  border-radius: 15px;
-  background-color: #000;
+  border-radius: 7px;
+  background-color: #1b998b;
   color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 10px 15px;
   cursor: pointer;
+
+  &:disabled {
+    background-color: #1b998b;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+  }
 }

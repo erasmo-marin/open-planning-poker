@@ -9,7 +9,7 @@ type PlayersTableType = React.FC;
 
 const PlayersTable: PlayersTableType = observer(() => {
   const { isHost, game } = roomStore;
-  const { votation, isRevealed = false, votationAverage } = game;
+  const { votation, votationAverage, validVotesCount } = game;
   const leftVote = votation?.votes[0];
   const rightVote = votation?.votes[1];
   const topBottomVotes = votation?.votes.slice(2, votation?.votes.length) || [];
@@ -18,13 +18,15 @@ const PlayersTable: PlayersTableType = observer(() => {
   const bottomVotes =
     topBottomVotes.slice(middle, votation?.votes.length) || [];
 
-  const toggleReveal = () => {
-    roomStore.execRoomAction({ type: "REVEAL_CARDS", value: !isRevealed });
+  const finishVotation = () => {
+    roomStore.execRoomAction({ type: "FINISH_VOTATION", value: null });
   };
 
   const startNewVotation = () => {
     roomStore.execRoomAction({ type: "CREATE_NEW_VOTATION", value: null });
   };
+
+  const votationIsFinished = votation?.state === "FINISHED";
 
   return (
     <div className="players-table-container">
@@ -34,7 +36,7 @@ const PlayersTable: PlayersTableType = observer(() => {
             key={leftVote.player.id}
             name={leftVote.player.name}
             value={leftVote.vote}
-            revealed={isRevealed}
+            revealed={votationIsFinished}
             check={!!(leftVote.vote !== null)}
           />
         )}
@@ -45,7 +47,7 @@ const PlayersTable: PlayersTableType = observer(() => {
             key={rightVote.player.id}
             name={rightVote.player.name}
             value={rightVote.vote}
-            revealed={isRevealed}
+            revealed={votationIsFinished}
             check={!!(rightVote.vote !== null)}
           />
         )}
@@ -56,7 +58,7 @@ const PlayersTable: PlayersTableType = observer(() => {
             key={vote.player.id}
             name={vote.player.name}
             value={vote.vote}
-            revealed={isRevealed}
+            revealed={votationIsFinished}
             check={!!(vote.vote !== null)}
           />
         ))}
@@ -67,27 +69,29 @@ const PlayersTable: PlayersTableType = observer(() => {
             key={vote.player.id}
             name={vote.player.name}
             value={vote.vote}
-            revealed={isRevealed}
+            revealed={votationIsFinished}
             check={!!(vote.vote !== null)}
           />
         ))}
       </div>
       <div className="table-item">
-        {isHost && (
-          <div className="host-actions">
-            {!isRevealed && (
-              <Button onClick={toggleReveal}>Reveal Cards</Button>
-            )}
-            {isRevealed && (
-              <>
+        <div className="host-actions">
+          {!votationIsFinished && isHost && (
+            <Button disabled={validVotesCount === 0} onClick={finishVotation}>
+              Reveal Cards
+            </Button>
+          )}
+          {votationIsFinished && (
+            <>
+              {isHost && (
                 <Button onClick={startNewVotation}>Start new votation</Button>
-                <div className="votation-result">
-                  Average: {Math.round(votationAverage * 100) / 100}
-                </div>
-              </>
-            )}
-          </div>
-        )}
+              )}
+              <div className="votation-result">
+                Average: {Math.round(votationAverage * 100) / 100}
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

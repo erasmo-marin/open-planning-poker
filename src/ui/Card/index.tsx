@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import CheckIcon from "../../ui/CheckIcon";
 import "./styles.scss";
 
 export interface CardProps {
@@ -25,11 +26,15 @@ const Card: CardType = ({
     <article className={classes} onClick={onClick}>
       <div className="card-inner">
         <div className="card-front">
-          {value && <div className="card-value">{value}</div>}
+          {value !== null && <div className="card-value">{value}</div>}
         </div>
         <div className="card-back" />
       </div>
-      {check && <div className="check">✅️</div>}
+      {check && (
+        <div className="check-icon-container">
+          <CheckIcon />
+        </div>
+      )}
     </article>
   );
 };

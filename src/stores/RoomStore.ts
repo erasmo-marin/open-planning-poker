@@ -11,7 +11,8 @@ type HostAction =
   | "UPDATE_VOTATION"
   | "VOTE"
   | "REVEAL_CARDS"
-  | "SYNC_STATE";
+  | "SYNC_STATE"
+  | "FINISH_VOTATION";
 
 type ClientAction = "ADD_PLAYER" | "VOTE";
 
@@ -84,8 +85,8 @@ class RoomStore {
         const { player, vote } = action.value;
         gameStore.setVote(player, vote);
         break;
-      case "REVEAL_CARDS":
-        gameStore.setIsRevealed(action.value);
+      case "FINISH_VOTATION":
+        gameStore.finishVotation();
         break;
       default:
         console.warn("Unknown message received from host");
@@ -97,7 +98,6 @@ class RoomStore {
         value: {
           players: gameStore.players,
           votation: gameStore.votation,
-          isRevealed: gameStore.isRevealed,
         },
       })
     );

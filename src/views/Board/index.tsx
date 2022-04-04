@@ -1,16 +1,20 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
+import classnames from "classnames";
 import roomStore from "../../stores/RoomStore";
 import gameStore from "../../stores/GameStore";
 import CardValueChooser from "./components/CardValueChooser";
 import PlayersTable from "./components/PlayersTable";
+import ShareButton from "./components/ShareButton";
+import Spinner from "../../ui/Spinner";
+import logo from "../../assets/logo.png";
 import "./styles.scss";
 
 const Board = observer(() => {
   const urlParams = new URLSearchParams(window.location.search);
   const roomIdFromParams = urlParams.get("roomId");
   const { roomId, connected } = roomStore;
-  const { votation } = gameStore;
+  const { votation, players } = gameStore;
 
   useEffect(() => {
     if (roomIdFromParams && !roomStore.client) {
@@ -36,19 +40,33 @@ const Board = observer(() => {
     });
   };
 
+  const classes = classnames("main-board", { loading: !connected });
+  const url =
+    window.location.protocol +
+    "//" +
+    window.location.host +
+    "?roomId=" +
+    roomId;
+
   return (
-    <main className="main-board">
-      {roomId && (
-        <div className="share-link">
-          Share this room: {window.location.host + "?roomId=" + roomId}
-        </div>
+    <main className={classes}>
+      <img alt="logo" src={logo} className="logo" />
+      {connected && players.length > 0 ? (
+        <>
+          {roomId && <ShareButton link={url} />}
+          <section className="board-table-container">
+            <PlayersTable />
+          </section>
+          <section className="board-voting-container">
+            <CardValueChooser
+              scale={votation?.scale}
+              onValueSelected={sendVote}
+            />
+          </section>
+        </>
+      ) : (
+        <Spinner />
       )}
-      <section className="board-table-container">
-        <PlayersTable />
-      </section>
-      <section className="board-voting-container">
-        <CardValueChooser scale={votation?.scale} onValueSelected={sendVote} />
-      </section>
     </main>
   );
 });

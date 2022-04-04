@@ -1,7 +1,8 @@
+import { votationState } from "./../models/Votation";
 import { VotingScale } from "../models/VotingScale";
 import { Votation } from "../models/Votation";
 import { Player } from "../models/Player";
-import { makeAutoObservable, toJS } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 const defaultScale: VotingScale = {
   label: "Default",
@@ -12,7 +13,6 @@ class GameStore {
   me?: Player;
   players: Array<Player> = [];
   votation?: Votation;
-  isRevealed: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -23,13 +23,12 @@ class GameStore {
     this.votation = {
       id: String(new Date().valueOf()),
       scale: defaultScale,
-      players: toJS(this.players),
+      state: "STARTED",
       votes: this.players.map((player) => ({
         player,
         vote: null,
       })),
     };
-    this.isRevealed = false;
   }
 
   setScale(scale: VotingScale) {
@@ -51,7 +50,6 @@ class GameStore {
   registerNewPlayer(player: Player) {
     this.players.push(player);
     if (this.votation) {
-      this.votation.players.push(player);
       this.votation.votes.push({ vote: null, player });
     }
   }
@@ -63,22 +61,29 @@ class GameStore {
     if (foundVote) foundVote.vote = value;
   }
 
-  setIsRevealed(revealed: boolean) {
-    this.isRevealed = revealed;
+  setVotationState(state: votationState) {
+    if (this.votation) this.votation.state = state;
   }
+
+  finishVotation = () => {
+    if (this.votation) this.votation.state = "FINISHED";
+  };
 
   setState({
     players,
     votation,
-    isRevealed,
   }: {
     players: Array<Player>;
     votation: Votation;
-    isRevealed: boolean;
   }) {
     this.players = players;
     this.votation = votation;
-    this.isRevealed = isRevealed;
+  }
+
+  get validVotesCount() {
+    return (
+      this.votation?.votes.filter((vote) => vote.vote !== null).length || 0
+    );
   }
 
   get votationAverage() {

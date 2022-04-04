@@ -18,16 +18,23 @@
     justify-content: center;
     align-items: center;
     padding: 50px 0;
-    border-top: 1px solid #dedede;
+    border-top: 2px solid rgba(45, 48, 71, 0.6);
+    background: #2d3047;
   }
-  .share-link {
-    font-size: 14px;
+  .share-button {
     position: fixed;
-    top: 0;
-    left: 0;
-    background: #000;
-    color: #fff;
-    padding: 10px;
-    border-radius: 0px 0px 10px 0px;
+    top: 16px;
+    right: 16px;
+  }
+  .logo {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    height: 60px;
+    width: auto;
+  }
+  &.loading {
+    justify-content: center;
+    align-items: center;
   }
 }
