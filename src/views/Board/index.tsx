@@ -9,12 +9,13 @@ import ShareButton from "./components/ShareButton";
 import Spinner from "../../ui/Spinner";
 import logo from "../../assets/logo.png";
 import "./styles.scss";
+import RegisterModal from "./components/RegisterModal";
 
 const Board = observer(() => {
   const urlParams = new URLSearchParams(window.location.search);
   const roomIdFromParams = urlParams.get("roomId");
   const { roomId, connected } = roomStore;
-  const { votation, players } = gameStore;
+  const { votation, players, me } = gameStore;
 
   useEffect(() => {
     if (roomIdFromParams && !roomStore.client) {
@@ -22,13 +23,13 @@ const Board = observer(() => {
     } else if (!roomIdFromParams && !roomStore.host) {
       roomStore.initHost();
     }
-    if (connected) {
-      const name = window.prompt("Enter your name", "") || "Anonymous";
-      const player = { name, id: name };
-      gameStore.setMe(player);
-      roomStore.execRoomAction({ type: "ADD_PLAYER", value: player });
-    }
   }, [connected, roomIdFromParams]);
+
+  const onRegister = (name: string) => {
+    const player = { name, id: String(new Date().valueOf()) + name };
+    gameStore.setMe(player);
+    roomStore.execRoomAction({ type: "ADD_PLAYER", value: player });
+  };
 
   const sendVote = (value: number) => {
     roomStore.execRoomAction({
@@ -41,6 +42,7 @@ const Board = observer(() => {
   };
 
   const classes = classnames("main-board", { loading: !connected });
+
   const url =
     window.location.protocol +
     "//" +
@@ -51,7 +53,8 @@ const Board = observer(() => {
   return (
     <main className={classes}>
       <img alt="logo" src={logo} className="logo" />
-      {connected && players.length > 0 ? (
+      {connected && <RegisterModal open={!me} onRegister={onRegister} />}
+      {connected && me && players.length > 0 ? (
         <>
           {roomId && <ShareButton link={url} />}
           <section className="board-table-container">
@@ -65,7 +68,7 @@ const Board = observer(() => {
           </section>
         </>
       ) : (
-        <Spinner />
+        !me ?? <Spinner />
       )}
     </main>
   );

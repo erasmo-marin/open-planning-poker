@@ -1,10 +1,7 @@
 import React, { useState, useRef } from "react";
-import Modal from "react-modal";
+import Modal from "../../../../ui/Modal";
 import Button from "../../../../ui/Button";
 import "./styles.scss";
-
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement("#root");
 
 interface ShareModalProps {
   link: string;
@@ -35,16 +32,13 @@ const ShareModal: React.FC<ShareModalProps> = ({
 
   return (
     <Modal
-      isOpen={open}
+      open={open}
       contentLabel="Share this"
       className="share-modal"
       onRequestClose={onRequestClose}
-      shouldCloseOnEsc
-      shouldFocusAfterRender
-      shouldReturnFocusAfterClose
     >
-      <h2>Invite Players</h2>
-      <p>Share this url to your teammates</p>
+      <h2 className="title">Invite Players</h2>
+      <p className="description">Share this url to your teammates</p>
       <input className="share-link" value={link} ref={linkInputRef} />
       <Button onClick={copyToClipboard}>
         {copied ? "Copied!" : "Copy to clipboard"}
