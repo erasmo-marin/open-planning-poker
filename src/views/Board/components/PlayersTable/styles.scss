@@ -1,8 +1,10 @@
 .players-table-container {
   width: 1000px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
   .planning-card {
     box-sizing: border-box;
     margin: 10px 20px 0px;
@@ -48,5 +50,12 @@
   .bottom-sit {
     grid-column: 2 / span 1;
     grid-row: 3 / span 1;
+  }
+  .votation-result {
+    text-align: center;
+    padding: 16px;
+    font-size: 24px;
+    color: #fff;
+    font-weight: 600;
   }
 }

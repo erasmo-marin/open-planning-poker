@@ -6,11 +6,18 @@
   align-items: center;
   justify-content: center;
   flex-flow: column;
+  width: 200px;
+  max-width: 200px;
   p {
+    width: 80%;
+    text-align: center;
     margin: 8px 0 0 0;
     padding: 0;
     color: rgba(0, 0, 0, 0.5);
     font-weight: 500;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 
