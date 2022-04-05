@@ -39,7 +39,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
     >
       <h2 className="title">Invite Players</h2>
       <p className="description">Share this url to your teammates</p>
-      <input className="share-link" value={link} ref={linkInputRef} />
+      <input className="share-link" value={link} ref={linkInputRef} readOnly />
       <Button onClick={copyToClipboard}>
         {copied ? "Copied!" : "Copy to clipboard"}
       </Button>

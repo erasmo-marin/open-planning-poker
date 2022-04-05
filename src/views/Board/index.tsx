@@ -14,7 +14,7 @@ import RegisterModal from "./components/RegisterModal";
 const Board = observer(() => {
   const urlParams = new URLSearchParams(window.location.search);
   const roomIdFromParams = urlParams.get("roomId");
-  const { roomId, connected } = roomStore;
+  const { roomId, connected, sessionId } = roomStore;
   const { votation, players, me } = gameStore;
 
   useEffect(() => {
@@ -26,7 +26,8 @@ const Board = observer(() => {
   }, [connected, roomIdFromParams]);
 
   const onRegister = (name: string) => {
-    const player = { name, id: String(new Date().valueOf()) + name };
+    if (!sessionId) throw new Error("Can not register without a session Id");
+    const player = { name, id: sessionId };
     gameStore.setMe(player);
     roomStore.execRoomAction({ type: "ADD_PLAYER", value: player });
   };
@@ -67,9 +68,9 @@ const Board = observer(() => {
             />
           </section>
         </>
-      ) : (
-        !me ?? <Spinner />
-      )}
+      ) : !connected ? (
+        <Spinner />
+      ) : null}
     </main>
   );
 });

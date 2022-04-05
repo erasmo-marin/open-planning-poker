@@ -22,6 +22,7 @@ type Action = {
 };
 
 class RoomStore {
+  sessionId?: string;
   isHost: boolean = false;
   client?: ClientService;
   host?: HostService;
@@ -36,7 +37,10 @@ class RoomStore {
   *initClient(roomId: string) {
     this.roomId = roomId;
     this.client = new ClientService();
-    yield this.client.connect(this.roomId, this.handleMessageFromHost);
+    this.sessionId = yield this.client.connect(
+      this.roomId,
+      this.handleMessageFromHost
+    );
     this.isHost = false;
     this.connected = true;
   }
@@ -44,7 +48,11 @@ class RoomStore {
   *initHost() {
     this.host = new HostService();
     this.roomId = yield this.host.connect();
-    this.host.listen(this.handleMessageFromClient);
+    this.sessionId = this.roomId;
+    this.host.listen(
+      this.handleMessageFromClient,
+      this.handleClientDisconnected
+    );
     this.connected = true;
     this.isHost = true;
   }
@@ -75,6 +83,7 @@ class RoomStore {
         gameStore.registerNewPlayer(action.value as Player);
         break;
       case "REMOVE_PLAYER":
+        gameStore.removePlayer(action.value);
         break;
       case "CREATE_NEW_VOTATION":
         gameStore.startNewVotation();
@@ -125,6 +134,11 @@ class RoomStore {
         console.warn("Unknown message received from host");
         break;
     }
+  };
+
+  handleClientDisconnected = (peerId: string) => {
+    console.log("disconnected", peerId);
+    this.execHostAction({ type: "REMOVE_PLAYER", value: peerId });
   };
 
   handleMessageFromClient = (actionMessage: string) => {

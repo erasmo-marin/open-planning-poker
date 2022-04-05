@@ -54,6 +54,14 @@ class GameStore {
     }
   }
 
+  removePlayer(playerId: string) {
+    this.players = this.players.filter((player) => player.id !== playerId);
+    if (this.votation)
+      this.votation.votes = this.votation?.votes.filter(
+        (vote) => vote.player.id !== playerId
+      );
+  }
+
   registerVote(player: Player, value: number) {
     const foundVote = this.votation?.votes.find(
       (vote) => vote.player.id === player.id
