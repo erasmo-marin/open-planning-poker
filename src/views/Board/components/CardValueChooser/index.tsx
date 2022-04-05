@@ -1,36 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from "../../../../ui/Card";
 import { VotingScale } from "../../../../models/VotingScale";
 import "./styles.scss";
 
 export interface CardValueChooserProps {
-  onValueSelected?: (value: number) => any;
+  value?: number | null;
+  onValueSelected: (value: number) => any;
   scale?: VotingScale;
 }
 
 type CardValueChooserType = React.FC<CardValueChooserProps>;
 
 const CardValueChooser: CardValueChooserType = ({
+  value,
   onValueSelected,
   scale,
 }: CardValueChooserProps) => {
-  const [selectedValue, setSelectedValue] = useState<number | null>(null);
-
-  const _onValueSelected = (value: number) => {
-    setSelectedValue(value);
-    onValueSelected && onValueSelected(value);
-  };
-
   return (
     <div className="card-value-chooser">
       {scale &&
-        scale.value.map((value) => (
+        scale.value.map((itemValue) => (
           <Card
-            key={value}
-            value={value}
+            key={itemValue}
+            value={itemValue}
             revealed
-            onClick={() => _onValueSelected(value)}
-            selected={value === selectedValue}
+            onClick={() => onValueSelected(itemValue)}
+            selected={itemValue === value}
           />
         ))}
     </div>

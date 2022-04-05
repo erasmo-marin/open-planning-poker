@@ -102,6 +102,14 @@ class GameStore {
     const sum = (votes as Array<number>).reduce((a, b) => a + b, 0);
     return sum / votes.length;
   }
+
+  get myVote() {
+    if (!this.me || !this.votation) return null;
+    const vote = this.votation.votes.find(
+      (item) => item.player.id === this.me?.id
+    );
+    return vote?.vote;
+  }
 }
 
 const gameStore = new GameStore();

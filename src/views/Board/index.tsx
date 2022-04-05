@@ -15,7 +15,7 @@ const Board = observer(() => {
   const urlParams = new URLSearchParams(window.location.search);
   const roomIdFromParams = urlParams.get("roomId");
   const { roomId, connected, sessionId } = roomStore;
-  const { votation, players, me } = gameStore;
+  const { votation, players, me, myVote } = gameStore;
 
   useEffect(() => {
     if (roomIdFromParams && !roomStore.client) {
@@ -63,6 +63,7 @@ const Board = observer(() => {
           </section>
           <section className="board-voting-container">
             <CardValueChooser
+              value={myVote}
               scale={votation?.scale}
               onValueSelected={sendVote}
             />
