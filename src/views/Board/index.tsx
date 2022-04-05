@@ -33,6 +33,7 @@ const Board = observer(() => {
   };
 
   const sendVote = (value: number) => {
+    if (votation?.state === "FINISHED") return;
     roomStore.execRoomAction({
       type: "VOTE",
       value: {
