@@ -4,6 +4,10 @@ Planning Poker is a game used on the Scrum framework to estimate relative effort
 
 Try the [demo](https://open-poker-planning.netlify.app/)!
 
+<p align="center">
+  <img src="https://github.com/erasmo-marin/open-planning-poker/blob/main/screenshot.png?raw=true" width="800px" height="auto"/>
+</p>
+
 ## Running the project
 
 This project was bootstraped using `create-react-app`, so all the scripts included in this tool are available. Also, we use peerjs server to develop locally.
