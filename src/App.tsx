@@ -1,4 +1,5 @@
 import Board from "./views/Board";
+import "./i18n";
 
 function App() {
   return (

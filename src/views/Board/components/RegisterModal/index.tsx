@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Modal from "../../../../ui/Modal";
 import Button from "../../../../ui/Button";
 import "./styles.scss";
@@ -9,6 +10,7 @@ interface RegisterModalProps {
 }
 
 const RegisterModal: React.FC<RegisterModalProps> = ({ open, onRegister }) => {
+  const { t } = useTranslation();
   const [name, setName] = useState<string>();
 
   const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,17 +26,18 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onRegister }) => {
   return (
     <Modal open={open} contentLabel="Share this" className="register-modal">
       <form onSubmit={_onRegister}>
-        <h2 className="title">Your display name</h2>
+        <h2 className="title">{t("Your display name")}</h2>
         <p className="description">
-          This is the name you will be using in the game.
+          {t("This is the name you will be using in the game.")}
         </p>
         <input
           className="name-input"
           onChange={onNameChange}
-          placeholder="John Doe"
+          placeholder={t("John Doe")}
+          autoFocus
         />
         <Button type="submit" disabled={!name}>
-          Continue to game
+          {t("Continue to game")}
         </Button>
       </form>
     </Modal>

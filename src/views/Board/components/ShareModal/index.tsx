@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import Modal from "../../../../ui/Modal";
 import Button from "../../../../ui/Button";
 import "./styles.scss";
@@ -15,6 +16,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
   open,
   onRequestClose,
 }) => {
+  const { t } = useTranslation();
   const linkInputRef = useRef<HTMLInputElement>(null);
   const [copied, setCopied] = useState<boolean>(false);
 
@@ -40,8 +42,8 @@ const ShareModal: React.FC<ShareModalProps> = ({
       onRequestClose={onRequestClose}
     >
       <form onSubmit={copyToClipboard}>
-        <h2 className="title">Invite Players</h2>
-        <p className="description">Share this url to your teammates</p>
+        <h2 className="title">{t("Invite Players")}</h2>
+        <p className="description">{t("Share this url to your teammates")}</p>
         <input
           className="share-link"
           value={link}
@@ -49,7 +51,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
           readOnly
         />
         <Button type="submit" autoFocus>
-          {copied ? "Copied!" : "Copy to clipboard"}
+          {copied ? t("Copied!") : t("Copy to clipboard")}
         </Button>
       </form>
     </Modal>

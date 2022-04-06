@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import roomStore from "../../../../stores/RoomStore";
 import PlayerCard from "../../../../ui/PlayerCard";
 import Button from "../../../../ui/Button";
@@ -8,6 +9,7 @@ import { observer } from "mobx-react-lite";
 type PlayersTableType = React.FC;
 
 const PlayersTable: PlayersTableType = observer(() => {
+  const { t } = useTranslation();
   const { isHost, game } = roomStore;
   const { votation, votationAverage, validVotesCount } = game;
   const leftVote = votation?.votes[0];
@@ -78,16 +80,20 @@ const PlayersTable: PlayersTableType = observer(() => {
         <div className="host-actions">
           {!votationIsFinished && isHost && (
             <Button disabled={validVotesCount === 0} onClick={finishVotation}>
-              Reveal Cards
+              {t("Reveal Cards")}
             </Button>
           )}
           {votationIsFinished && (
             <>
               {isHost && (
-                <Button onClick={startNewVotation}>Start new votation</Button>
+                <Button onClick={startNewVotation}>
+                  {t("Start new votation")}
+                </Button>
               )}
               <div className="votation-result">
-                Average: {Math.round(votationAverage * 100) / 100}
+                {t("Average: {{average}}", {
+                  average: Math.round(votationAverage * 100) / 100,
+                })}
               </div>
             </>
           )}
