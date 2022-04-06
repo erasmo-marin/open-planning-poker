@@ -18,7 +18,9 @@ const ShareModal: React.FC<ShareModalProps> = ({
   const linkInputRef = useRef<HTMLInputElement>(null);
   const [copied, setCopied] = useState<boolean>(false);
 
-  const copyToClipboard = () => {
+  const copyToClipboard = (e: React.FormEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     const copyText = linkInputRef.current;
     if (!copyText) return;
     copyText.select();
@@ -37,12 +39,19 @@ const ShareModal: React.FC<ShareModalProps> = ({
       className="share-modal"
       onRequestClose={onRequestClose}
     >
-      <h2 className="title">Invite Players</h2>
-      <p className="description">Share this url to your teammates</p>
-      <input className="share-link" value={link} ref={linkInputRef} readOnly />
-      <Button onClick={copyToClipboard}>
-        {copied ? "Copied!" : "Copy to clipboard"}
-      </Button>
+      <form onSubmit={copyToClipboard}>
+        <h2 className="title">Invite Players</h2>
+        <p className="description">Share this url to your teammates</p>
+        <input
+          className="share-link"
+          value={link}
+          ref={linkInputRef}
+          readOnly
+        />
+        <Button type="submit" autoFocus>
+          {copied ? "Copied!" : "Copy to clipboard"}
+        </Button>
+      </form>
     </Modal>
   );
 };

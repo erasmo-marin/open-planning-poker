@@ -15,24 +15,28 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onRegister }) => {
     setName(e.target.value);
   };
 
-  const _onRegister = () => {
+  const _onRegister = (e: React.FormEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (name) onRegister(name);
   };
 
   return (
     <Modal open={open} contentLabel="Share this" className="register-modal">
-      <h2 className="title">Your display name</h2>
-      <p className="description">
-        This is the name you will be using in the game.
-      </p>
-      <input
-        className="name-input"
-        onChange={onNameChange}
-        placeholder="John Doe"
-      />
-      <Button onClick={_onRegister} disabled={!name}>
-        Continue to game
-      </Button>
+      <form onSubmit={_onRegister}>
+        <h2 className="title">Your display name</h2>
+        <p className="description">
+          This is the name you will be using in the game.
+        </p>
+        <input
+          className="name-input"
+          onChange={onNameChange}
+          placeholder="John Doe"
+        />
+        <Button type="submit" disabled={!name}>
+          Continue to game
+        </Button>
+      </form>
     </Modal>
   );
 };
