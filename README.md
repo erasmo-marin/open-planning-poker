@@ -2,7 +2,7 @@
 
 Planning Poker is a game used on the Scrum framework to estimate relative effort or size of a task in the software development process. This implementation aims to provide a very simple and easy to use UI/UX, without unnecessary features. It uses peerjs to stablish the communication between a host and clients.
 
-Try the [demo](https://open-poker-planning.netlify.app/)!
+Try the [demo](https://open-planning-poker.netlify.app/)!
 
 <p align="center">
   <img src="https://github.com/erasmo-marin/open-planning-poker/blob/main/screenshot.png?raw=true" width="800px" height="auto"/>
